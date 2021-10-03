@@ -1,0 +1,41 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/x86_64-linux-gnu-gcc-10",
+      "-c",
+      "-o",
+      "xgaussj.o",
+      "xgaussj.c",
+      "-Iinclude"
+    ],
+    "directory": "/home/keinkein/workspace/NumericalRecipes",
+    "file": "/home/keinkein/workspace/NumericalRecipes/xgaussj.c",
+    "output": "/home/keinkein/workspace/NumericalRecipes/xgaussj.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/x86_64-linux-gnu-gcc-10",
+      "-c",
+      "-o",
+      "gaussj.o",
+      "gaussj.c",
+      "-Iinclude"
+    ],
+    "directory": "/home/keinkein/workspace/NumericalRecipes",
+    "file": "/home/keinkein/workspace/NumericalRecipes/gaussj.c",
+    "output": "/home/keinkein/workspace/NumericalRecipes/gaussj.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/x86_64-linux-gnu-gcc-10",
+      "-c",
+      "-o",
+      "nrutil.o",
+      "nrutil.c",
+      "-Iinclude"
+    ],
+    "directory": "/home/keinkein/workspace/NumericalRecipes",
+    "file": "/home/keinkein/workspace/NumericalRecipes/nrutil.c",
+    "output": "/home/keinkein/workspace/NumericalRecipes/nrutil.o"
+  }
+]
