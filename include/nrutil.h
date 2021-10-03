@@ -69,14 +69,19 @@ void free_convert_matrix(float **b, long nrl, long nrh, long ncl, long nch);
 void free_f3tensor(float ***t, long nrl, long nrh, long ncl, long nch,
 	long ndl, long ndh);
 
-#define declare__Matrix(T)\
-    struct Matrix__##T{\
+#define declare__NR__Matrix(T)\
+    struct NR__Matrix__##T{\
         T **data;\
         int nrow;\
         int ncol;\
     };\
-    typedef struct Matrix__##T Matrix__##T;
-declare__Matrix(float);
+    typedef struct NR__Matrix__##T NR__Matrix__##T;\
+    NR__Matrix__##T *NR__Matrix__##T##__new(int nrow, int ncol);\
+    void NR__Matrix__##T##__free(NR__Matrix__##T *m);\
+    NR__Matrix__##T *NR__Matrix__##T##__eye(int n);\
+    NR__Matrix__##T *NR__Matrix__##T##__cat(int nums, ...);\
+
+declare__NR__Matrix(float);
 #else /* ANSI */
 /* traditional - K&R */
 
