@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include "nrutil.h"
+#include <stdarg.h>
 #define NR_END 1
 #define FREE_ARG char*
 
@@ -287,6 +289,48 @@ void free_f3tensor(float ***t, long nrl, long nrh, long ncl, long nch,
 	free((FREE_ARG) (t+nrl-NR_END));
 }
 
+#define define__NR__Matrix(T)\
+    NR__Matrix__##T *NR__Matrix__##T##__new(int nrow, int ncol){\
+        NR__Matrix__##T *m = malloc(sizeof(NR__Matrix__##T));\
+        m->nrow = nrow;\
+        m->ncol = ncol;\
+        m->data = malloc(nrow * sizeof(T *));\
+        m->data[0] = malloc(nrow * ncol * sizeof(T));\
+        for(int i=1; i<nrow; i++){\
+            m->data[i] = m->data[i-1] + ncol;\
+        }\
+        return m;\
+    }\
+    void NR__Matrix__##T##__free(NR__Matrix__##T *m){\
+        free(m->data[0]);\
+        free(m->data);\
+        free(m);\
+    }\
+    NR__Matrix__##T *NR__Matrix__##T##__eye(int n){\
+        NR__Matrix__##T *m = NR__Matrix__##T##__new(n, n);\
+        for(int i=0; i<n; i++){\
+            for(int j=0; j<n; j++){\
+                if(i==j){\
+                    m->data[i][j] = 1;\
+                }else{\
+                    m->data[i][j] = 0;\
+                }\
+            }\
+        }\
+        return m;\
+    }\
+    NR__Matrix__##T *NR__Matrix__##T##__cat(int nums, ...){\
+        va_list valist;\
+        va_start(valist,nums);\
+        NR__Matrix__##T **m = malloc(nums * sizeof(NR__Matrix__##T *));\
+        for(int i=0; i<nums; i++){\
+            m[i] = va_arg(valist, NR__Matrix__##T);\
+        }\
+    }\
+    NR__Matrix__##T *NR__Matrix__##T##__row_swap(int nrowi, int nrowj);\
+    NR__Matrix__##T *NR__Matrix__##T##__row_linear_combination(int nrowi, float ki, int nrowj, float kj);\
+
+define__NR__Matrix(float);
 #else /* ANSI */
 /* traditional - K&R */
 

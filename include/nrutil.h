@@ -80,6 +80,8 @@ void free_f3tensor(float ***t, long nrl, long nrh, long ncl, long nch,
     void NR__Matrix__##T##__free(NR__Matrix__##T *m);\
     NR__Matrix__##T *NR__Matrix__##T##__eye(int n);\
     NR__Matrix__##T *NR__Matrix__##T##__cat(int nums, ...);\
+    NR__Matrix__##T *NR__Matrix__##T##__row_swap(int nrowi, int nrowj);\
+    NR__Matrix__##T *NR__Matrix__##T##__row_linear_combination(int nrowi, float ki, int nrowj, float kj);\
 
 declare__NR__Matrix(float);
 #else /* ANSI */
