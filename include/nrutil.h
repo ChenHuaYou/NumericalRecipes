@@ -79,9 +79,13 @@ void free_f3tensor(float ***t, long nrl, long nrh, long ncl, long nch,
     NR__Matrix__##T *NR__Matrix__##T##__new(int nrow, int ncol);\
     void NR__Matrix__##T##__free(NR__Matrix__##T *m);\
     NR__Matrix__##T *NR__Matrix__##T##__eye(int n);\
-    NR__Matrix__##T *NR__Matrix__##T##__cat(int nums, ...);\
-    NR__Matrix__##T *NR__Matrix__##T##__row_swap(int nrowi, int nrowj);\
-    NR__Matrix__##T *NR__Matrix__##T##__row_linear_combination(int nrowi, float ki, int nrowj, float kj);\
+    NR__Matrix__##T *NR__Matrix__##T##__cat_2_matrix(NR__Matrix__##T *m1, NR__Matrix__##T *m2);\
+    NR__Matrix__##T *NR__Matrix__##T##__cat_multi_matrix(int nums, ...);\
+    void NR__Matrix__##T##__row_swap(NR__Matrix__##T *m, int nrowi, int nrowj);\
+    void NR__Matrix__##T##__row_linear_combination(NR__Matrix__##T *m, int nrow_dst, float k_dst, int nrow_src, float k_src);\
+    int NR__Matrix__##T##__max_along_col(NR__Matrix__##T *m, int col);\
+    NR__Matrix__##T *NR__Matrix__##T##__subMatrix(NR__Matrix__##T *m, int start_row, int start_col, int nrows, int ncols);\
+
 
 declare__NR__Matrix(float);
 #else /* ANSI */

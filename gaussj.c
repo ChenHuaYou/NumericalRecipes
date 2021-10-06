@@ -56,5 +56,33 @@ void gaussj(float **a, int n, float **b, int m)
 	free_ivector(indxr,1,n);
 	free_ivector(indxc,1,n);
 }
+
+#define NR__gaussj(T)\
+void NR__##T##__gaussj(NR__Matrix__##T *a, NR__Matrix__##T *b){\
+    NR__Matrix__##T *I = NR__Matrix__##T##__eye(a->nrow);\
+    NR__Matrix__##T *A = NR__Matrix__##T##__cat_multi_matrix(3,a,b,I);\
+    for(int i=0; i<A->ncol; i++){\
+        int idx = NR__Matrix__##T##__max_along_col(A, i);\
+        NR__Matrix__##T##__row_swap(A, idx, i);\
+        NR__Matrix__##T##__row_linear_combination(A, i, 1/A->data[i][i], i, 0);\
+        for(int j=0; j<A->nrow; j++){\
+            if(j==i) continue;\
+            NR__Matrix__##T##__row_linear_combination(A, j, 1, i, -A->data[j][i]);\
+        }\
+    }\
+    for(int i=0; i<a->nrow; i++){\
+        for(int j=0; j<I->ncol; j++){\
+            a->data[i][j] = A->data[i][a->ncol+b->ncol+j];\
+        }\
+        for(int j=0; j<b->ncol; j++){\
+            b->data[i][j] = A->data[i][a->ncol+j];\
+        }\
+    }\
+}\
+
+NR__gaussj(float);
+
+
+
 #undef SWAP
 #undef NRANSI

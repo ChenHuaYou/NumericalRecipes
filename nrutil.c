@@ -319,16 +319,70 @@ void free_f3tensor(float ***t, long nrl, long nrh, long ncl, long nch,
         }\
         return m;\
     }\
+    NR__Matrix__##T *NR__Matrix__##T##__cat_2_matrix(NR__Matrix__##T *m1, NR__Matrix__##T *m2){\
+        if(m1->nrow != m2->nrow) nrerror("m1.nrow != m2.nrow");\
+        NR__Matrix__##T *m = NR__Matrix__##T##__new(m1->nrow,m1->ncol+m2->ncol);\
+        for(int i=0; i<m1->nrow; i++){\
+            for(int j=0; j<m1->ncol; j++){\
+                m->data[i][j] = m1->data[i][j];\
+            }\
+            for(int j=m1->ncol; j<m1->ncol+m2->ncol; j++){\
+                m->data[i][j] = m2->data[i][j];\
+            }\
+        }\
+        return m;\
+    }\
     NR__Matrix__##T *NR__Matrix__##T##__cat(int nums, ...){\
         va_list valist;\
         va_start(valist,nums);\
-        NR__Matrix__##T **m = malloc(nums * sizeof(NR__Matrix__##T *));\
+        NR__Matrix__##T **args = malloc(nums * sizeof(NR__Matrix__##T *));\
+        int ncols = 0;\
         for(int i=0; i<nums; i++){\
-            m[i] = va_arg(valist, NR__Matrix__##T);\
+            args[i] = va_arg(valist, NR__Matrix__##T *);\
+            ncols += args[i]->ncol;\
+        }\
+        NR__Matrix__##T *m = NR__Matrix__##T##__new(args[0]->nrow,ncols);\
+        for(int i=0; i<args[0]->nrow; i++){\
+            int col_start=0;\
+            for(int k=0; k<nums; k++){\
+                for(int j=0; j<args[k]->ncol; j++){\
+                    m->data[i][col_start+j] = args[k]->data[i][j];\
+                }\
+                col_start += args[k]->ncol;\
+            }\
+        }\
+        return m;\
+    }\
+    void NR__Matrix__##T##__row_swap(NR__Matrix__##T *m, int nrowi, int nrowj){\
+        T *vec = m->data[nrowi];\
+        m->data[nrowi] =  m->data[nrowj];\
+        m->data[nrowj] = vec;\
+    }\
+    void NR__Matrix__##T##__row_linear_combination(NR__Matrix__##T *m, int nrow_dst, float k_dst, int nrow_src, float k_src){\
+        for(int i=0; i<m->ncol; i++){\
+            m->data[nrow_dst][i] = m->data[nrow_dst][i]*k_dst + m->data[nrow_src][i]*k_src;\
         }\
     }\
-    NR__Matrix__##T *NR__Matrix__##T##__row_swap(int nrowi, int nrowj);\
-    NR__Matrix__##T *NR__Matrix__##T##__row_linear_combination(int nrowi, float ki, int nrowj, float kj);\
+    int NR__Matrix__##T##__max_along_col(NR__Matrix__##T *m, int col){\
+        T max = m->data[col][col];\
+        int idx = col;\
+        for(int i=0; i<m->nrow; i++){\
+            if (max<m->data[i][col]){\
+                max = m->data[i][col];\
+                idx = i;\
+            }\
+        }\
+        return idx;\
+    }\
+    NR__Matrix__##T *NR__Matrix__##T##__subMatrix(NR__Matrix__##T *m, int start_row, int start_col, int nrows, int ncols){\
+        NR__Matrix__##T *new_m = NR__Matrix__##T##__new(nrows, ncols);\
+        for(int i=0; i<nrows; i++){\
+            for(int j=0; j<ncols; j++){\
+                new_m->data[i][j] = m->data[start_row+i][start_col+j];\
+            }\
+        }\
+        return new_m;\
+    }\
 
 define__NR__Matrix(float);
 #else /* ANSI */
