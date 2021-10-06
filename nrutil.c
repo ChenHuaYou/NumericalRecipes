@@ -301,6 +301,15 @@ void free_f3tensor(float ***t, long nrl, long nrh, long ncl, long nch,
         }\
         return m;\
     }\
+    NR__Matrix__##T *NR__Matrix__##T##__new_by_copy(NR__Matrix__##T *m){\
+        NR__Matrix__##T *m_new = NR__Matrix__##T##__new(m->nrow, m->ncol);\
+        for(int i=0; i<m->nrow; i++){\
+            for(int j=0; j<m->ncol; j++){\
+                m_new->data[i][j] = m->data[i][j];\
+            }\
+        }\
+        return m_new;\
+    }\
     void NR__Matrix__##T##__free(NR__Matrix__##T *m){\
         free(m->data[0]);\
         free(m->data);\
@@ -318,6 +327,10 @@ void free_f3tensor(float ***t, long nrl, long nrh, long ncl, long nch,
             }\
         }\
         return m;\
+    }\
+    NR__Matrix__##T *NR__Matrix__##T##__dot(NR__Matrix__##T *m1, NR__Matrix__##T *m2){\
+        NR__Matrix__##T *m = NR__Matrix__##T##__new(m1->nrow, m2->ncol);\
+
     }\
     NR__Matrix__##T *NR__Matrix__##T##__cat_2_matrix(NR__Matrix__##T *m1, NR__Matrix__##T *m2){\
         if(m1->nrow != m2->nrow) nrerror("m1.nrow != m2.nrow");\

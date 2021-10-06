@@ -1,6 +1,8 @@
 #ifndef _NR_H_
 #define _NR_H_
 
+#include "nrutil.h"
+
 #ifndef _FCOMPLEX_DECLARE_T_
 typedef struct FCOMPLEX {float r,i;} fcomplex;
 #define _FCOMPLEX_DECLARE_T_
@@ -519,6 +521,10 @@ void zrhqr(float a[], int m, float rtr[], float rti[]);
 float zriddr(float (*func)(float), float x1, float x2, float xacc);
 void zroots(fcomplex a[], int m, fcomplex roots[], int polish);
 
+#define declare__NR__algorithmn(T)\
+void NR__##T##__gaussj(NR__Matrix__##T *a, NR__Matrix__##T *b);\
+
+declare__NR__algorithmn(float);
 #else /* ANSI */
 /* traditional - K&R */
 

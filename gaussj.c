@@ -57,7 +57,7 @@ void gaussj(float **a, int n, float **b, int m)
 	free_ivector(indxc,1,n);
 }
 
-#define NR__gaussj(T)\
+#define declare__NR__gaussj(T)\
 void NR__##T##__gaussj(NR__Matrix__##T *a, NR__Matrix__##T *b){\
     NR__Matrix__##T *I = NR__Matrix__##T##__eye(a->nrow);\
     NR__Matrix__##T *A = NR__Matrix__##T##__cat_multi_matrix(3,a,b,I);\
@@ -80,7 +80,7 @@ void NR__##T##__gaussj(NR__Matrix__##T *a, NR__Matrix__##T *b){\
     }\
 }\
 
-NR__gaussj(float);
+declare__NR__gaussj(float);
 
 
 

@@ -1,6 +1,7 @@
 #ifndef _NR_UTILS_H_
 #define _NR_UTILS_H_
 
+
 static float sqrarg;
 #define SQR(a) ((sqrarg=(a)) == 0.0 ? 0.0 : sqrarg*sqrarg)
 
@@ -77,8 +78,10 @@ void free_f3tensor(float ***t, long nrl, long nrh, long ncl, long nch,
     };\
     typedef struct NR__Matrix__##T NR__Matrix__##T;\
     NR__Matrix__##T *NR__Matrix__##T##__new(int nrow, int ncol);\
+    NR__Matrix__##T *NR__Matrix__##T##__new_by_copy(NR__Matrix__##T *m);\
     void NR__Matrix__##T##__free(NR__Matrix__##T *m);\
     NR__Matrix__##T *NR__Matrix__##T##__eye(int n);\
+    NR__Matrix__##T *NR__Matrix__##T##__dot(NR__Matrix__##T *m1, NR__Matrix__##T *m2);\
     NR__Matrix__##T *NR__Matrix__##T##__cat_2_matrix(NR__Matrix__##T *m1, NR__Matrix__##T *m2);\
     NR__Matrix__##T *NR__Matrix__##T##__cat_multi_matrix(int nums, ...);\
     void NR__Matrix__##T##__row_swap(NR__Matrix__##T *m, int nrowi, int nrowj);\
