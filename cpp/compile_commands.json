@@ -1,0 +1,26 @@
+[
+    {
+        "arguments": [
+            "c++",
+            "-c",
+            "-Iinclude",
+            "-o",
+            "obj/xgaussj.o",
+            "xgaussj.cpp"
+        ],
+        "directory": "/home/mc/erp/data/NumericalRecipes/cpp",
+        "file": "xgaussj.cpp"
+    },
+    {
+        "arguments": [
+            "c++",
+            "-c",
+            "-Iinclude",
+            "-o",
+            "obj/gaussj.o",
+            "gaussj.cpp"
+        ],
+        "directory": "/home/mc/erp/data/NumericalRecipes/cpp",
+        "file": "gaussj.cpp"
+    }
+]
